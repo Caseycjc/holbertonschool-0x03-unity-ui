@@ -2,11 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+
 
 public class PlayerController : MonoBehaviour
 {
     public float speed;
     public int health;
+    public Text scoreText;
     private Rigidbody rb;
     private int score;
 
@@ -15,6 +18,7 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         score = 0;
         health = 5;
+        SetScoreText(); // Update score text at the start of the game
     }
 
     void FixedUpdate()
@@ -33,7 +37,8 @@ public class PlayerController : MonoBehaviour
         {
             other.gameObject.SetActive(false);
             score++;
-            Debug.Log("Score: " + score);
+            // Debug.Log("Score: " + score);
+            SetScoreText(); // Update score text whenever a pickup is collected
         }
         else if (other.gameObject.CompareTag("Trap"))
         {
@@ -45,6 +50,7 @@ public class PlayerController : MonoBehaviour
             Debug.Log("You win!");
         }
     }
+
     void Update()
     {
         if (health == 0)
@@ -52,5 +58,10 @@ public class PlayerController : MonoBehaviour
             Debug.Log("Game Over!");
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
+    }
+
+    void SetScoreText()
+    {
+        scoreText.text = "Score: " + score.ToString();
     }
 }
