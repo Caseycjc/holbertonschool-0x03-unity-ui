@@ -2,13 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI; // Add this line
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
     public float speed;
     public int health;
     public Text scoreText;
+    public Text healthText;
     private Rigidbody rb;
     private int score;
 
@@ -18,6 +19,7 @@ public class PlayerController : MonoBehaviour
         score = 0;
         health = 5;
         SetScoreText();
+        SetHealthText();
     }
 
     void FixedUpdate()
@@ -36,13 +38,12 @@ public class PlayerController : MonoBehaviour
         {
             other.gameObject.SetActive(false);
             score++;
-            // Debug.Log("Score: " + score);
             SetScoreText();
         }
         else if (other.gameObject.CompareTag("Trap"))
         {
             health--;
-            // Debug.Log("Health: " + health);
+            SetHealthText();
         }
         else if (other.gameObject.CompareTag("Goal"))
         {
@@ -62,5 +63,10 @@ public class PlayerController : MonoBehaviour
     void SetScoreText()
     {
         scoreText.text = "Score: " + score.ToString();
+    }
+
+    void SetHealthText()
+    {
+        healthText.text = "Health: " + health.ToString();
     }
 }
